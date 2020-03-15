@@ -1,0 +1,27 @@
+SOCKETS in UDP
+
+A typical network application consists of a pair of programs – a client program and a server program – residing in two different end systems.
+
+When these two programs are executed, a client process and a server process are created, and these processes communicate with each other by reading from, and writing to, sockets.
+
+That is, processes running on different machines communicate with each other by sending messages into sockets.
+
+A process is like a house and a socket is like a door. A house may have many doors.
+
+A house belongs only one person (a host). A host may have many houses.
+
+The application resides on one side of the door in the house.
+
+The transport-layer protocol resides on the other side of the door in the outside world.
+
+The application developer has control of everything on the application-layer side of the socket; however it has little control of the transport-layer side.
+
+Before the sending process can push a packet of data out the socket door, when using UDP, it must first attach a destination address to the packet *.
+
+After the packet passes through the sender’s door (that is, after the packet passes through the sender’s socket), the internet will use this destination address to route the packet through the Internet to the socket in the receiving process.
+
+When the packet arrives at the receiving socket, the receiving process will retrieve the packet through the socket, and then inspect the packet’s contents and take appropriate action.
+
+The data that goes into * is the name of the destination host (that is, the host’s IP address). But the destination host may have many houses and a house may have many doors! We need to also specify which house and which door in that house we are sending our packet to. It turns out that every door has a unique ID associated with it called PORT NUMBER. So really it is enough if we include the destination IP address and the destination socket port.
+
+It is also necessary to include the sender’s IP address and socket, but in UPD this is done automatically by the OS, so we don’t need to worry about it.
