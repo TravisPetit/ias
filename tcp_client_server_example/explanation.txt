@@ -1,0 +1,19 @@
+SOCKETS in TCP
+
+Unlike UDP, TCP is a connection-oriented protocol. 
+
+This means that before the client and server can start to send data to each other, they first need to handshake and establish a TCP connection.
+
+When creating a TCP connection, we associate with it the client socket address (IP address and port number) and the server socket address (IP address and port number).
+
+With the connection established, when one side wants to send data to the other side, it just drops data into the TCP connection via its socket.
+
+The client has the job of initiating contact with the server. In order for the server to be able to react to the client’s initial contact, the server has to be ready i.e. the server program has to be running before the client program. “The client must knock on the door of the host”.
+
+When the client creates its TCP socket, it specifies the address of the welcoming socket in the server, namely the IP address of the server host and the port number of the socket.
+
+After creating its socket, the client initiates a 3-way handshake, which takes place within the transport layer. It is completely invisible to the client and server programs.
+
+During the 3-way handshake, the client process knocks on the welcoming door of the server process. When the server “hears” the knocking, it creates a new door – more precisely, a new socket that is dedicated to that (and only that) particular client.
+
+In total, 3 sockets are created in TCP. Unlike in UDP, where only 2 are created.
