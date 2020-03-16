@@ -1,19 +1,6 @@
 import socket, select, sys
 
-#def recieve_message(client_scoket):
-#	try:
-#		message_header = client_socket.recv(10) #10 is the header length
-#
-#		if no len(message_header):
-#			return False
-#
-#		message_length = int(message_header.decode().strip())
-#		return {"header": message_header, "data": client_socket.recv(len(message_header))}
-#
-#	except:
-#		return False
-
-serverPort = 12000
+serverPort = 12001
 
 IPv4 = socket.AF_INET
 TCP = socket.SOCK_STREAM
@@ -25,10 +12,14 @@ serverSocket.listen(1) # set the maximum number of queued connections requests t
 
 my_uname = input("Enter a username: ")
 
+print("Waiting for someone to connect ...")
+
 connectionSocket, addr = serverSocket.accept() # create the third socket, the tunnel for connecting with the client
 print("Someboy connected!")
+
 partner_uname = connectionSocket.recv(1024).decode()
 print("It's {}".format(partner_uname))
+connectionSocket.send(my_uname.encode())
 
 things_we_are_going_to_read = [connectionSocket, sys.stdin]
 things_we_are_going_to_write = [connectionSocket]
@@ -45,10 +36,5 @@ while True:
 		if notified_input == connectionSocket:
 			recieved_message = connectionSocket.recv(1024).decode()
 			print("{}: {}".format(partner_uname, recieved_message))
-
-	#message = connectionSocket.recv(1024).decode()
-	#print("{}: {}".format(partner_uname, message))
-	#reply = input("{}: ".format(my_uname))
-	#connectionSocket.send(reply.encode())
 
 connectionSocket.close()
