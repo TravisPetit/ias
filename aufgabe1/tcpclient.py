@@ -1,5 +1,9 @@
 import socket, select, sys
 
+blue = '\033[94m'
+green = '\033[92m'
+endcolor = '\033[0m'
+
 serverName = socket.gethostname()
 serverPort = 12001
 
@@ -9,7 +13,7 @@ TCP = socket.SOCK_STREAM
 clientSocket = socket.socket(IPv4, TCP)
 clientSocket.connect((serverName, serverPort))
 
-my_uname = input("enter a Username: ")
+my_uname = input(green + "enter a Username: " + endcolor)
 clientSocket.send(my_uname.encode())
 
 things_we_are_going_to_read = [clientSocket, sys.stdin]
@@ -29,6 +33,6 @@ while True:
 
 		if notified_input == clientSocket:
 			recieved_message = clientSocket.recv(1024).decode()
-			print("{}: {}".format(partner_uname, recieved_message))
+			print(blue + "{}: {}".format(partner_uname, recieved_message) + endcolor)
 
 clientSocket.close()

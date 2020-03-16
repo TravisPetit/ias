@@ -1,5 +1,9 @@
 import socket, select, sys
 
+blue = '\033[94m'
+green = '\033[92m'
+endcolor = '\033[0m'
+
 serverPort = 12001
 
 IPv4 = socket.AF_INET
@@ -10,7 +14,7 @@ serverSocket.bind(("", serverPort))
 
 serverSocket.listen(1) # set the maximum number of queued connections requests to 1 i.e. only 1 client can connect at the time
 
-my_uname = input("Enter a username: ")
+my_uname = input(green + "Enter a username: " + endcolor)
 
 print("Waiting for someone to connect ...")
 
@@ -18,7 +22,7 @@ connectionSocket, addr = serverSocket.accept() # create the third socket, the tu
 print("Someboy connected!")
 
 partner_uname = connectionSocket.recv(1024).decode()
-print("It's {}".format(partner_uname))
+print("It's {}!".format(partner_uname))
 connectionSocket.send(my_uname.encode())
 
 things_we_are_going_to_read = [connectionSocket, sys.stdin]
@@ -35,6 +39,6 @@ while True:
 
 		if notified_input == connectionSocket:
 			recieved_message = connectionSocket.recv(1024).decode()
-			print("{}: {}".format(partner_uname, recieved_message))
+			print(blue + "{}: {}".format(partner_uname, recieved_message) + endcolor)
 
 connectionSocket.close()
