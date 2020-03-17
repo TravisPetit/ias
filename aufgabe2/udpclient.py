@@ -18,7 +18,7 @@ username = input("Choose a username: ")
 
 def connect(serverReply):
 	clientSocket = socket.socket(IPv4, UDP)
-	clientSocket.bind(("", chatPort)) ###
+	clientSocket.bind(("", chatPort))
 
 	if serverReply[0] != "(":
 		print("Waiting for someone to start a chat with you ...")
@@ -33,7 +33,7 @@ def connect(serverReply):
 		partnerName = serverReply[2:].split("'")[0]
 		partnerAddress = serverReply[2:].split("'")[2]
 		partnerPort = int(serverReply[2:].split("'")[3][2:-2])
-		clientSocket.sendto(username.encode(), (partnerAddress, 1234))
+		clientSocket.sendto(username.encode(), (partnerAddress, chatPort))
 
 	print("Connecting to {} with address {} on the port {}".format(partnerName, partnerAddress, partnerPort))
 
@@ -47,7 +47,7 @@ def connect(serverReply):
 		for notified_input in read_input:
 			if notified_input == sys.stdin:
 				toSend = sys.stdin.readline().strip()
-				clientSocket.sendto(toSend.encode(), (partnerAddress, 1234))
+				clientSocket.sendto(toSend.encode(), (partnerAddress, chatPort))
 
 			if notified_input == clientSocket:
 				recieved_message, _ = clientSocket.recvfrom(1024)
