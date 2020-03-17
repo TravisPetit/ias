@@ -1,5 +1,10 @@
 import socket
 
+header ='\033[95m'
+blue = '\033[94m'
+underline = '\033[4m'
+endcolor = '\033[0m'
+
 serverPort = 12000
 
 IPv4 = socket.AF_INET
@@ -24,12 +29,12 @@ def getReply(name, address, users, socket):
 	message, _ = serverSocket.recvfrom(2048)
 	try:
 		usr = users[int(message.decode().strip())]
-		print("Setting up a connection between {} and {}".format(name, usr[1]))
+		print(blue + "Setting up a connection between {} and {}".format(name, usr[1]) + endcolor)
 		#mssg = "Setting up a connection between you and {}.".format(usr[1])
 		socket.sendto(str(usr).encode(), address)
 		return True
 	except:
-		print("{} doesn't want to chat with anyone :(".format(name))
+		print(underline + "{} doesn't want to chat with anyone :(".format(name) + endcolor)
 		mssg = "###MESSAGE FROM SERVER###\n"
 		mssg += "It appears that you don't want to chat with anyone, fine."
 		socket.sendto(mssg.encode(), address)
@@ -40,7 +45,7 @@ while True:
 	userName = userName.decode()
 	users.append((userName, userAddress))
 
-	print("User {} with address {} connected to the server!".format(userName, userAddress))
+	print(header + "User {} with address {} connected to the server!".format(userName, userAddress) + endcolor)
 	print("Offering {} to establish a connection with someone ...".format(userName))
 
 	sendUserList(userAddress, users, serverSocket)
