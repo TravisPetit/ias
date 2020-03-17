@@ -4,7 +4,6 @@ blue = '\033[94m'
 green = '\033[92m'
 endcolor = '\033[0m'
 
-#serverName = socket.gethostname()
 serverName = sys.argv[1]
 
 serverPort = 12000
@@ -25,7 +24,6 @@ def connect(serverReply):
 		partner_uname, partner = clientSocket.recvfrom(2048)
 		print("Someone wants to chat!")
 		partnerAddress = partner[0]
-		print(partnerAddress)
 		partnerPort = int(partner[1])
 		partnerName = partner_uname.decode()
 
@@ -35,7 +33,8 @@ def connect(serverReply):
 		partnerPort = int(serverReply[2:].split("'")[3][2:-2])
 		clientSocket.sendto(username.encode(), (partnerAddress, chatPort))
 
-	print("Connecting to {} with address {} on the port {}".format(partnerName, partnerAddress, partnerPort))
+	print(green + "Connecting to {} with address {} on the port {}".format(partnerName, partnerAddress, chatPort) + endcolor)
+	print("Say something!")
 
 	things_we_are_going_to_read = [clientSocket, sys.stdin]
 	things_we_are_going_to_write = [clientSocket]
