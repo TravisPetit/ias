@@ -4,8 +4,8 @@ blue = '\033[94m'
 green = '\033[92m'
 endcolor = '\033[0m'
 
-serverName = socket.gethostname()
-serverPort = 12001
+serverName = input(green + "IP address: " + endcolor)
+serverPort = int(input(green + "Port Number: " + endcolor))
 
 IPv4 = socket.AF_INET
 TCP = socket.SOCK_STREAM
@@ -13,7 +13,7 @@ TCP = socket.SOCK_STREAM
 clientSocket = socket.socket(IPv4, TCP)
 clientSocket.connect((serverName, serverPort))
 
-my_uname = input(green + "enter a Username: " + endcolor)
+my_uname = input(green + "Enter a username: " + endcolor)
 clientSocket.send(my_uname.encode())
 
 things_we_are_going_to_read = [clientSocket, sys.stdin]

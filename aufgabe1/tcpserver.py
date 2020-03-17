@@ -4,7 +4,7 @@ blue = '\033[94m'
 green = '\033[92m'
 endcolor = '\033[0m'
 
-serverPort = 12001
+serverPort = int(input(green + "Port Number: " + endcolor))
 
 IPv4 = socket.AF_INET
 TCP = socket.SOCK_STREAM
