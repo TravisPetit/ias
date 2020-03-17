@@ -4,7 +4,8 @@ blue = '\033[94m'
 green = '\033[92m'
 endcolor = '\033[0m'
 
-serverName = socket.gethostname()
+#serverName = socket.gethostname()
+serverName = sys.argv[1]
 
 serverPort = 12000
 chatPort = 1234
@@ -17,13 +18,14 @@ username = input("Choose a username: ")
 
 def connect(serverReply):
 	clientSocket = socket.socket(IPv4, UDP)
+	clientSocket.bind(("", chatPort)) ###
 
 	if serverReply[0] != "(":
 		print("Waiting for someone to start a chat with you ...")
-		clientSocket.bind(("", chatPort)) ###
 		partner_uname, partner = clientSocket.recvfrom(2048)
 		print("Someone wants to chat!")
 		partnerAddress = partner[0]
+		print(partnerAddress)
 		partnerPort = int(partner[1])
 		partnerName = partner_uname.decode()
 
@@ -45,18 +47,14 @@ def connect(serverReply):
 		for notified_input in read_input:
 			if notified_input == sys.stdin:
 				toSend = sys.stdin.readline().strip()
-				###clientSocket.sendto(toSend.encode(), (partnerAddress, partnerPort))
 				clientSocket.sendto(toSend.encode(), (partnerAddress, 1234))
 
 			if notified_input == clientSocket:
-				print("yoooooooooooooooo")
 				recieved_message, _ = clientSocket.recvfrom(1024)
 				recieved_message = recieved_message.decode()
 				print(blue + "{}: {}".format(partnerName, recieved_message) + endcolor)
 
 		
-	#communication todo
-
 
 clientSocket.sendto(username.encode(), (serverName, serverPort))
 
@@ -70,10 +68,7 @@ serverReply, _ = clientSocket.recvfrom(2048)
 serverReply = serverReply.decode()
 
 print(serverReply)
-if serverReply[0] != "(":
-	pass
 
 connect(serverReply)
-
 
 clientSocket.close()
