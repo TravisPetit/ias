@@ -4,7 +4,16 @@ blue = '\033[94m'
 green = '\033[92m'
 endcolor = '\033[0m'
 
-serverPort = int(input(green + "Port Number: " + endcolor))
+
+try:
+	serverPort = int(sys.argv[0])
+except:
+	print("Invalid command line arguments, falling back to default mode ...")
+	try:
+		serverPort = int(input(green + "Port Number: " + endcolor))
+	except:
+		print("Bad input, falling back to default mode")
+		serverPort = 12001
 
 IPv4 = socket.AF_INET
 TCP = socket.SOCK_STREAM

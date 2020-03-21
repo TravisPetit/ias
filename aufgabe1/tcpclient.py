@@ -4,8 +4,18 @@ blue = '\033[94m'
 green = '\033[92m'
 endcolor = '\033[0m'
 
-serverName = input(green + "IP address: " + endcolor)
-serverPort = int(input(green + "Port Number: " + endcolor))
+try:
+	serverName = sys.argv[0]
+	serverPort = int(sys.argv[1])
+except:
+	print("Invalid command line arguments, using stdin instead...")
+	try:
+		serverName = input(green + "IP address: " + endcolor)
+		serverPort = int(input(green + "Port Number: " + endcolor))
+	except:
+		print("Bad input, falling back to default mode ...")
+		serverName = socket.gethostname()
+		serverPort = 12001
 
 IPv4 = socket.AF_INET
 TCP = socket.SOCK_STREAM
