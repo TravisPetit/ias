@@ -6,7 +6,7 @@ endcolor = '\033[0m'
 
 
 try:
-	serverPort = int(sys.argv[0])
+	serverPort = int(sys.argv[1])
 except:
 	print("Invalid command line arguments, falling back to default mode ...")
 	try:

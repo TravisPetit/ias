@@ -5,8 +5,8 @@ green = '\033[92m'
 endcolor = '\033[0m'
 
 try:
-	serverName = sys.argv[0]
-	serverPort = int(sys.argv[1])
+	serverName = sys.argv[1]
+	serverPort = int(sys.argv[2])
 except:
 	print("Invalid command line arguments, using stdin instead...")
 	try:
