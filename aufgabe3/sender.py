@@ -12,12 +12,13 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.settimeout(0.2)
 
 # Set the time-to-live for messages to 1 so they do not go past the
-# local network segment.
+# local network segment. Again, in binary:
+
 ttl = struct.pack('b', 1)
+# at the IP level, set the time to live option to ttl
 sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
 
 try:
-
     # Send data to the multicast group
     print ('sending {}'.format(message))
     sent = sock.sendto(message.encode(), multicast_group)
