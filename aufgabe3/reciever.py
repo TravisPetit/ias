@@ -26,7 +26,7 @@ for addr in groups:
 
 	# Bind to the server address
 	#sock.bind(server_address)
-	sock.bind(addr.port)
+	#sock.bind(addr.port)
 
 
 	# Tell the operating system to add the socket to the multicast group
@@ -59,6 +59,9 @@ for addr in groups:
 
 
 
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+s.bind(("", 1234))
+
 while True:
 #	for address_sock in address_sockets:
 #		addr = address_sock[0]
@@ -69,8 +72,6 @@ while True:
 #			sock.sendto("ack".encode(), (addr.ip, addr.port[1]))
 #		except socket.timeout:
 #			continue
-	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	s.bind(("", 1234))
 	client_uname, client_addr = s.recvfrom(2048) #recieve clinet uname
 	client_uname = client_uname.decode()
 	print("{} joined the server!".format(client_uname))

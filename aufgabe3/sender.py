@@ -29,10 +29,7 @@ server_port = int(server_port.decode())
 s.close()
 print("Joining Multicast chat room on addr {} and port {} ...".format(server_ip, server_port))
 
-
-
 message = 'very important data'
-#multicast_group = ('224.3.29.70', 10000)
 multicast_group = (server_ip, server_port)
 
 # Create the datagram socket
@@ -49,11 +46,14 @@ ttl = struct.pack('b', 1)
 # at the IP level, set the time to live option to ttl
 sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
 
+sock.bind(("", server_port))
+
 try:
 	#sent = sock.sendto(message.encode(), multicast_group)
 	while True:
 		read_input,_,_ = select.select([sys.stdin, sock], [sock], [sys.stdin, sock])
 		for notified_input in read_input:
+			print("fa{slkdjflkeaflkjsa")
 			if notified_input == sys.stdin:
 				toSend = sys.stdin.readline().strip()
 				sock.sendto(toSend.encode(), multicast_group)
