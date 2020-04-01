@@ -7,7 +7,7 @@ blue = '\033[94m'
 green = '\033[92m'
 endcolor = '\033[0m'
 
-unicast_addr = input("Enter server addr: ")
+unicast_addr = input("Enter unicast host ip addr: ")
 uname = input("Enter username: ")
 unicast_port = 1234
 
@@ -47,10 +47,9 @@ ttl = struct.pack('b', 1)
 sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
 
 #sock.bind(("", server_port))
-sock.bind(multicast_group)
+#sock.bind(multicast_group)
 
 try:
-	#sent = sock.sendto(message.encode(), multicast_group)
 	while True:
 		read_input,_,_ = select.select([sys.stdin, sock], [sock], [sys.stdin, sock])
 		for notified_input in read_input:
@@ -60,13 +59,6 @@ try:
 			if notified_input == sock:
 				mssg, _ = sock.recvfrom(2048)
 				print(mssg.decode())
-        #try:
-        #    data, server = sock.recvfrom(16)
-        #except socket.timeout:
-        #    print('timed out, no more responses')
-        #    break
-        #else:
-        #    print ('received {} from {}'.format(data, server))
 
 finally:
     print('closing socket')

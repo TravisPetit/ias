@@ -16,8 +16,7 @@ class Address:
 
 for i in range(0, number_servers):
 	groups.append(Address("224.3.29.{}".format(70+i), 10000 + i))
-	print(groups[i].ip)
-	print(groups[i].port)
+	print("Created multicast server {} with IP: {} on port {}".format(i, groups[i].ip, groups[i].port[1]))
 
 
 for addr in groups:
@@ -58,20 +57,10 @@ for addr in groups:
 
 
 
-
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.bind(("", 1234))
 
 while True:
-#	for address_sock in address_sockets:
-#		addr = address_sock[0]
-#		sock = address_sock[1]
-#		try:
-#			data, _ = sock.recvfrom(1024)
-#			print(data.decode())
-#			sock.sendto("ack".encode(), (addr.ip, addr.port[1]))
-#		except socket.timeout:
-#			continue
 	client_uname, client_addr = s.recvfrom(2048) #recieve clinet uname
 	client_uname = client_uname.decode()
 	print("{} joined the server!".format(client_uname))
