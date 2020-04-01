@@ -46,14 +46,14 @@ ttl = struct.pack('b', 1)
 # at the IP level, set the time to live option to ttl
 sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
 
-sock.bind(("", server_port))
+#sock.bind(("", server_port))
+sock.bind(multicast_group)
 
 try:
 	#sent = sock.sendto(message.encode(), multicast_group)
 	while True:
 		read_input,_,_ = select.select([sys.stdin, sock], [sock], [sys.stdin, sock])
 		for notified_input in read_input:
-			print("fa{slkdjflkeaflkjsa")
 			if notified_input == sys.stdin:
 				toSend = sys.stdin.readline().strip()
 				sock.sendto(toSend.encode(), multicast_group)
