@@ -82,10 +82,11 @@ def encrypt(padded_data):
 	# output
 	# it is very important for iv to be random
 	# it is also public knowledge, so it is just printed
-	# in STDOOUT
+	# in STDOOUT and saved in the file iv.txt
 	iv = get_random_bytes(16)
 	cipher = AES.new(key, AES.MODE_CBC, iv)
 	output = cipher.encrypt(padded_data)
+	write_encrypted(iv, "iv.txt")
 	print("using iv = {}".format(iv))
 	return output
 
