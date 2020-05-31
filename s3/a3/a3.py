@@ -37,21 +37,42 @@ def write(bytes, path):
 	file.close()
 
 
+# first we create copy header of the penguin in the file 'header'
 os.system("head -c 54 tux.bmp >> header")
+
+# and the content itself in a the file 'body'
 os.system("tail -c +54 tux.bmp >> body")
 
-cryptor = a("Gzb9X-EAiZsk5-7OVZe0KrwIiLxySqYWfJFyyDtPf4w=")
+SECRET_KEY = "Gzb9X-EAiZsk5-7OVZe0KrwIiLxySqYWfJFyyDtPf4w="
 
+# we initialize a cryptorr with our secret key
+cryptor = a(SECRET_KEY)
+
+# read the contents of the header and body files just created
 header = read_file("header")
 body = read_file("body")
 
+# encrypt the content of the body and sign the header
 cipher_text = cryptor.encrypt(body, header)
+
+
+# unfortunately ciper text is in base64, so we must convert it to binary
+# for that we can't just use base64.b64decode(s) because the padding is
+# incorrect, so we use a dedicated function for that
 cipher_text = base64_decode(cipher_text)
 
+# we write the bytes into 'out'
 write(cipher_text, "out")
+
+# create the image
 os.system("touch img.bmp")
+
+# append the header to the image
 os.system("cat header >> img.bmp")
+
+# append the encrypted body to the image
 os.system("cat out >> img.bmp")
+
 
 # do some manipulations to the associated data
 # cipher_text = ~cipher_text
