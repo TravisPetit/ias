@@ -4,6 +4,13 @@ from aead import AEAD as a
 import os
 import logging
 
+# disclaimer: if you get the incorrect padding error when running this program, please
+# delete the header and body output files and run it again.
+# This might take a few tries, I have no idead why this happens, since our decode
+# function should not raise exceptions. Also, I have no idea why rerunning the program makes
+# this work, but it does.
+
+
 # copied from https://stackoverflow.com/questions/2941995/python-ignore-incorrect-padding-error-when-base64-decoding
 # because I kept on getting the error 'Incorrect padding'
 def base64_decode(s):
@@ -57,8 +64,8 @@ cipher_text = cryptor.encrypt(body, header)
 
 
 # unfortunately ciper text is in base64, so we must convert it to binary
-# for that we can't just use base64.b64decode(s) because the padding is
-# incorrect, so we use a dedicated function for that
+# We can't just use base64.b64decode(s) because the padding is
+# incorrect, so we use a dedicated function
 cipher_text = base64_decode(cipher_text)
 
 # we write the bytes into 'out'
@@ -91,6 +98,7 @@ os.system("cat out >> img.bmp")
 #os.system("cat out >> img2.bmp")
 
 
+# file cleaning
 os.system("rm out")
 os.system("rm header")
 os.system("rm body")
