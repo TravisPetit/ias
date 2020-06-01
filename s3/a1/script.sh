@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# script that converts the output of the encryption tool into an image
+
 # save the first 54 bytes of the file tux.bmp
 # into a new file called image.bmp
 head -c 54 tux.bmp >> image.bmp
