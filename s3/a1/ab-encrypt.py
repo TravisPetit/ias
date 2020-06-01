@@ -9,7 +9,7 @@ from Crypto.Util.Padding import pad, unpad  # requires 'pycrypto' package
 # divides the plaintext into blocks of bits and uses a specially constructed function 
 # which mixes a block of the plaintext with the secret key to produce a block of the ciphertext.
 # Block ciphers operate with a fixed transformation on large blocks of plaintext data.
-# Therefore, they operate on blocks of fixed length data (in this code length is 16 bits).
+# Therefore, they operate on blocks of fixed length data (in this code length is 16 bytes).
 # Since the plaintext to be encrypted can be of any length, there are encryption modes that are
 # used for encrypting messages larger than the block size (such as ECB and CBC).
 block_size = 16           
