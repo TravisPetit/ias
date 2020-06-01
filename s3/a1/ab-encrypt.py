@@ -4,11 +4,20 @@ import argparse
 from Crypto.Cipher import AES               # requires 'pycrypto' package
 from Crypto.Util.Padding import pad, unpad  # requires 'pycrypto' package
 
-#AES is a block cipher, setting the block size to 16 means that ...
+# AES is a block cipher; As symmetric cryptography is subdivided into types based on
+# the amount of information it can encrypt or decrypt at a time, Block cipher is one of the types in which it
+# divides the plaintext into blocks of bits and uses a specially constructed function 
+# which mixes a block of the plaintext with the secret key to produce a block of the ciphertext.
+# Block ciphers operate with a fixed transformation on large blocks of plaintext data.
+# Therefore, they operate on blocks of fixed length data (in this code length is 16 bits).
+# Since the plaintext to be encrypted can be of any length, there are encryption modes that are
+# used for encrypting messages larger than the block size (such as ECB and CBC).
 block_size = 16           
 
-
-# AES is also a symmetric cipher, key contrais the secret key, which is ...
+# AES is a symmetric cipher, In symmetric cryptography or private-key cryptography, the same key is used for both
+# encryption and decryption. This means that the encryption key must be shared between the two parties before any messages can be decrypted. 
+# Symmetric cryptography can be used to transmit information over an insecure public channel and ensures strong mutual authentication.
+# Key must be exchanged with the receivers every time the key is changed for encryption. So, the key is not changed often.
 key = b'!pre-shared-key!'
 
 
@@ -27,10 +36,13 @@ def write_encrypted(bytes, path):
 
 def main(args):
 
-	# we set the mode of operation to ECB, this means that ...
+	# We set the mode of encryption to Electronic codebook mode (ECB). In this mode, a plaintext is divided into fixed size blocks 
+	# each of the plaintext blocks is directly encrypted into a ciphertext block, independently of any other block.
+	# This enables parallelism in encrypting the plaintext blocks and decrypting the ciphertext blocks,
+	# which yields high performance.
 	cipher = AES.new(key, AES.MODE_ECB)
 
-	# we read the input bytes from a plaintext file
+	# we read the input bytes from a plaintext file. The message to be encrypted is called a plaintext 
 	plain_text = read_plain(args.input)
 
 	# then we pad it such that it is fit for 'block_size'
@@ -41,12 +53,11 @@ def main(args):
 	# but the message is 12 bits long, we add 3 redundant bits
 	# at the end, that way we can divide the text into
 	# 3 whole blocks when performing AES.
-	# we want to split this in blocks because ...
 	padded_plain_text = pad(plain_text, block_size)
 
 	# we are now ready to encrypt the message
 	# the cipher.encrypt method takes the padded_plain_text
-	# as an input and returns ...
+	# as an input and and the output of the encryption process is called a ciphertext.
 	cipher_text = cipher.encrypt(padded_plain_text)
 
 	# which is then written to the file whose name is the
